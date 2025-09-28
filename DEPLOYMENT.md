@@ -21,3 +21,18 @@ Backend Requirements
 Your server (e.g., Node.js, Python) must serve this HTML file and implement the following endpoint:
 Endpoint: POST /api/ai-extract
 Request Body (JSON):
+{
+  "documentContext": "Text content of the PDF...",
+  "fieldsToExtract": {"field1": "Description1", "field2": "Description2", ...}
+}
+Backend Responsibilities:
+1. Receive the request.
+2. Securely access your Gemini API Key (use environment variables).
+3. Construct the prompt for Gemini, instructing it to return JSON. (Using Gemini's response_mime_type: "application/json" is highly recommended).
+4. Call the Gemini API.
+5. Return the results.
+Expected Response Body (JSON):
+{
+  "field1": "Extracted text",
+  "field2": null
+}
