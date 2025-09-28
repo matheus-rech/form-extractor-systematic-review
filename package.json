@@ -1,0 +1,48 @@
+{
+  "name": "form-extractor-systematic-review",
+  "version": "1.0.0",
+  "description": "A full-stack application for extracting and processing forms in systematic reviews",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
+    "build": "npm run client:build && npm run server:build",
+    "test": "npm run server:test && npm run client:test",
+    "start": "npm run server:start",
+    "server:dev": "cd server && npm run dev",
+    "server:start": "cd server && npm start",
+    "server:build": "cd server && npm run build",
+    "server:test": "cd server && npm test",
+    "client:dev": "cd client && npm run dev",
+    "client:build": "cd client && npm run build",
+    "client:test": "cd client && npm test",
+    "client:serve": "cd client && npm run serve",
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+    "clean": "rm -rf node_modules server/node_modules client/node_modules",
+    "lint": "npm run server:lint && npm run client:lint",
+    "server:lint": "cd server && npm run lint",
+    "client:lint": "cd client && npm run lint",
+    "deploy": "npm run build && npm run deploy:server && npm run deploy:client",
+    "deploy:server": "echo 'Deploy server to your preferred hosting service'",
+    "deploy:client": "echo 'Deploy client to your preferred hosting service'"
+  },
+  "keywords": [
+    "systematic-review",
+    "form-extraction",
+    "full-stack",
+    "html-extraction",
+    "research-tools"
+  ],
+  "author": "Matheus Rech",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "workspaces": [
+    "server",
+    "client"
+  ]
+}

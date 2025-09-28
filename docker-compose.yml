@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: form-extractor-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: form-extractor
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - form-extractor-network
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: form-extractor-server
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://mongodb:27017/form-extractor
+      - JWT_SECRET=${JWT_SECRET}
+      - FRONTEND_URL=http://localhost:3000
+    depends_on:
+      - mongodb
+    networks:
+      - form-extractor-network
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: form-extractor-client
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    environment:
+      - VITE_API_URL=http://localhost:3001/api
+    depends_on:
+      - server
+    networks:
+      - form-extractor-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  form-extractor-network:
+    driver: bridge
